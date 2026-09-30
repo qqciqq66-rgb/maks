@@ -7,6 +7,7 @@ RUN npm run build
 
 FROM node:24-alpine
 ENV NODE_ENV=production \
+    NODE_EXTRA_CA_CERTS=/app/certs/russian_trusted_ca.pem \
     PORT=8080 \
     STATIC_DIR=/app/public \
     DATA_DIR=/app/data
@@ -14,6 +15,7 @@ WORKDIR /app
 COPY server/package.json ./
 COPY server/src ./src
 COPY server/db ./db
+COPY certs ./certs
 COPY --from=webapp /webapp/dist ./public
 RUN mkdir -p /app/data && chown -R node:node /app/data
 USER node

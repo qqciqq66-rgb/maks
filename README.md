@@ -168,6 +168,7 @@ cd server && npm test                           # автотесты (17 шт.)
 - HTTPS-туннель: `cloudflare/cloudflared:2026.9.3`.
 - Мини-приложение: `react` 19.2.8, `react-dom` 19.2.8, `@maxhub/max-ui` 0.5.0, `@fontsource-variable/manrope` 5.3.0 (шрифты Manrope и Glametrix под лицензией SIL OFL 1.1 хранятся локально, без внешних запросов; текст лицензии Glametrix — `webapp/src/fonts/OFL.txt`), `vite` 7, `@vitejs/plugin-react` 5. Версии зафиксированы в `package-lock.json`.
 - MAX Bridge: `https://st.max.ru/js/max-web-app.js`.
+- Сертификаты УЦ Минцифры России (`certs/russian_trusted_ca.pem`): Bot API MAX (`platform-api2.max.ru`) использует сертификат, выданный Russian Trusted Root CA, которого нет в стандартном хранилище Node.js. Образ подключает его через `NODE_EXTRA_CA_CERTS`, проверка TLS остаётся включённой. Источник — официальный CDN Госуслуг `gu-st.ru`; SHA-256 корневого: `71:64:5A:DD:B4:F1:BA:D5:0E:5B:F7:63:65:14:4E:FF:AF:9B:B7:35:D6:E8:C0:CA:43:64:B5:B8:E0:00:B6:CD`, промежуточного: `BB:BD:E2:10:3E:79:0B:99:9E:C6:2B:D0:3C:F6:25:A5:A2:E7:C3:16:E1:0A:FE:6A:49:0E:ED:EA:D8:B3:FD:9B`.
 
 ## Внешние сервисы и интеграции
 
