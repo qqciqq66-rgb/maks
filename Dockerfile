@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 FROM node:24-alpine AS webapp
 WORKDIR /webapp
 COPY webapp/package.json webapp/package-lock.json ./
