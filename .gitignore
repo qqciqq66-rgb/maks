@@ -1,7 +1,8 @@
 node_modules/
 dist/
-data/
-data-dev/
+/data/
+server/data/
+/data-dev/
 .env
 *.log
 *.zip
