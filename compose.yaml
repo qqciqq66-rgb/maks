@@ -15,7 +15,10 @@ services:
 
   tunnel:
     image: cloudflare/cloudflared:2026.9.3
-    command: tunnel --no-autoupdate --url http://app:8080
+    command: tunnel --no-autoupdate --protocol http2 --url http://app:8080
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     depends_on:
       - app
     profiles: ["tunnel"]

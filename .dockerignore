@@ -1,7 +1,5 @@
 **/node_modules
 **/dist
-data
-data-dev
 server/data
 **/.env
 **/.env.*
@@ -14,6 +12,5 @@ server/data
 **/.idea
 **/*.log
 
-.poort
 *.bat
 *.zip
