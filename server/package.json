@@ -1,0 +1,15 @@
+{
+  "name": "resheno-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "«Решено» — бэкенд: API мини-приложения и чат-бот MAX",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test"
+  }
+}
