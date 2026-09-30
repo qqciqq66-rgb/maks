@@ -13,16 +13,29 @@ const store = new Store(config.dataDir);
 await store.load();
 
 let bot = null;
-if (botEnabled()) {
-  bot = new Bot(store);
-  try {
-    await bot.init();
-    if (config.botMode === 'webhook') await bot.startWebhook();
-    else bot.startPolling();
-  } catch (err) {
-    console.error('[bot] не удалось запустить бота, работаем без него:', err.message);
-    bot = null;
+let stopping = false;
+
+async function startBot() {
+  const candidate = new Bot(store);
+  let delay = 5000;
+  while (!stopping) {
+    try {
+      await candidate.init();
+      if (config.botMode === 'webhook') await candidate.startWebhook();
+      else candidate.startPolling();
+      bot = candidate;
+      return;
+    } catch (err) {
+      const reason = err.cause?.code ? `${err.message} (${err.cause.code})` : err.message;
+      console.error(`[bot] не удалось запустить бота, повтор через ${delay / 1000} с:`, reason);
+      await new Promise((r) => setTimeout(r, delay));
+      delay = Math.min(delay * 2, 60000);
+    }
   }
+}
+
+if (botEnabled()) {
+  startBot();
 } else {
   console.warn('[bot] MAX_BOT_TOKEN не задан или BOT_MODE=off — бот отключён, мини-приложение работает');
 }
@@ -34,6 +47,7 @@ server.listen(config.port, () => {
 
 function shutdown(signal) {
   console.log(`[app] получен ${signal}, останавливаемся`);
+  stopping = true;
   bot?.stop();
   server.close(async () => {
     await store.writeChain;
